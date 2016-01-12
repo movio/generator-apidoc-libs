@@ -5,35 +5,6 @@
   "imports": [],
 
   "models": {
-    "kafka_movie": {
-      "attributes": [
-        { "name": "kafka_props",
-          "value": {
-            "data_type": "person",
-            "message_key": "v0.id",
-            "topic": "s\"mc-person-master-${tenant}\""
-          }
-        }
-      ],
-      "fields": [
-        {
-          "name": "v0",
-          "type": "person"
-        },
-        {
-          "name": "utcGeneratedTime",
-          "type": "date-iso8601",
-          "attributes": [
-            { "name": "scala_type", "value":
-              {
-                "class": "org.joda.time.LocalDateTime",
-                "default": "org.joda.time.LocalDateTime.now(org.joda.time.DateTimeZone.UTC)"
-              }
-            }
-          ]
-        }
-      ]
-    },
     "person": {
       "description": "TBC",
       "plural": "people",
@@ -54,7 +25,7 @@
           "type": "date-iso8601",
           "required": false,
           "attributes": [
-            { "name": "scala_type", "value": { "class": "org.joda.time.LocalDate"} }
+            { "name": "scala_props", "value": { "class": "org.joda.time.LocalDate"} }
           ]
         },
         {
@@ -100,6 +71,35 @@
           "name": "message",
           "type": "string",
           "description": "A description of the error that occurred."
+        }
+      ]
+    },
+    "kafka_person": {
+      "attributes": [
+        { "name": "kafka_props",
+          "value": {
+            "data_type": "person",
+            "message_key": "v0.id",
+            "topic": "s\"mc-person-master-${tenant}\""
+          }
+        }
+      ],
+      "fields": [
+        {
+          "name": "v0",
+          "type": "person"
+        },
+        {
+          "name": "utc_generated_time",
+          "type": "date-iso8601",
+          "attributes": [
+            { "name": "scala_props", "value":
+              {
+                "class": "org.joda.time.LocalDateTime",
+                "default": "org.joda.time.LocalDateTime.now(org.joda.time.DateTimeZone.UTC)"
+              }
+            }
+          ]
         }
       ]
     }
