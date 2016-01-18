@@ -25,7 +25,7 @@
           "type": "date-iso8601",
           "required": false,
           "attributes": [
-            { "name": "scala_props", "value": { "class": "org.joda.time.LocalDate"} }
+            { "name": "scala_field_props", "value": { "class": "org.joda.time.LocalDate"} }
           ]
         },
         {
@@ -93,7 +93,7 @@
           "name": "utc_generated_time",
           "type": "date-iso8601",
           "attributes": [
-            { "name": "scala_props", "value":
+            { "name": "scala_field_props", "value":
               {
                 "class": "org.joda.time.LocalDateTime",
                 "default": "org.joda.time.LocalDateTime.now(org.joda.time.DateTimeZone.UTC)"
