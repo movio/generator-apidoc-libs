@@ -1,10 +1,11 @@
 code:
   <%= props.apidocOrg %>:
     <%= props.apidocApp %>:
-      version: <%= props.apidocVersion %> 
+      version: <%= props.apidocVersion %>
       generators:
         advanced_scala_models: lib/src/main/generated
         play_2_x_json_standalone: lib/src/main/generated
         play_2_4_client: play-client/src/main/generated
         kafka_0_8: kafka-lib_0_8/src/main/generated
         kafka_0_8_tests: kafka-lib_0_8/src/test/generated
+        samza_serde: samza-lib/src/main/generated
