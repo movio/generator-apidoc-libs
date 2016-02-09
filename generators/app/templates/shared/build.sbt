@@ -11,7 +11,7 @@ val KafkaVersion_0_9 = "0.9.0.0"
 
 lazy val root = project
   .in( file(".") )
-  .aggregate(lib, playLib, kafkaLib_0_8)
+  .aggregate(lib, playLib, kafkaLib_0_8, samzaLib)
   .settings(
     publish := {}
   )
