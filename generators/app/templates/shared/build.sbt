@@ -5,12 +5,13 @@ name := "<%= props.appName %>"
 crossScalaVersions := Seq("2.10.6", "2.11.7")
 
 val PlayVersion = "2.4.4"
+val SamzaVersion = "0.10.0"
 val KafkaVersion_0_8 = "0.8.2.2"
 val KafkaVersion_0_9 = "0.9.0.0"
 
 lazy val root = project
   .in( file(".") )
-  .aggregate(lib, playLib, kafkaLib_0_8)
+  .aggregate(lib, playLib, kafkaLib_0_8, samzaLib)
   .settings(
     publish := {}
   )
@@ -21,6 +22,22 @@ lazy val lib = project
   .settings(
     libraryDependencies ++= Seq(
       "com.typesafe.play" %% "play-json" % PlayVersion
+    )
+  )
+
+lazy val samzaLib = project
+  .in(file("samza-lib"))
+  .dependsOn(lib)
+  .aggregate(lib)
+  .settings(commonSettings: _*)
+  .settings(
+    scalaVersion := "2.10.4",
+    crossScalaVersions := Seq("2.10.4"),
+    ivyScala := ivyScala.value map (_.copy(overrideScalaVersion = true)),
+    libraryDependencies ++= Seq(
+      "com.typesafe.play" %% "play-ws" % PlayVersion,
+      "org.apache.samza" % "samza-api" % SamzaVersion,
+      "joda-time" % "joda-time" % "2.2"
     )
   )
 
