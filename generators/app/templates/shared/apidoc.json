@@ -91,7 +91,7 @@
         },
         {
           "name": "utc_generated_time",
-          "type": "date-iso8601",
+          "type": "date-time-iso8601",
           "attributes": [
             { "name": "scala_field_props", "value":
               {
