@@ -74,7 +74,7 @@
         }
       ]
     },
-    "kafka_person": {
+    "kafkaPerson": {
       "attributes": [
         { "name": "kafka_props",
           "value": {
@@ -90,7 +90,7 @@
           "type": "person"
         },
         {
-          "name": "utc_generated_time",
+          "name": "utcGeneratedTime",
           "type": "date-time-iso8601",
           "attributes": [
             { "name": "scala_field_props", "value":
