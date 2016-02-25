@@ -2,7 +2,7 @@ organization := "<%= props.organization %>"
 
 name := "<%= props.appName %>"
 
-crossScalaVersions := Seq("2.10.6", "2.11.7")
+crossScalaVersions in ThisBuild := Seq("2.10.6", "2.11.7")
 
 val PlayVersion = "2.4.4"
 val SamzaVersion = "0.10.0"
