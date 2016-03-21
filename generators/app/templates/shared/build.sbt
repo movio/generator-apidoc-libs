@@ -11,7 +11,7 @@ val KafkaVersion_0_9 = "0.9.0.0"
 
 lazy val root = project
   .in( file(".") )
-  .aggregate(lib, playLib, kafkaLib_0_8, samzaLib)
+  .aggregate(lib, playLib, kafkaLib_0_8)
   .settings(
     publish := {}
   )
@@ -28,6 +28,7 @@ lazy val lib = project
 lazy val samzaLib = project
   .in(file("samza-lib"))
   .dependsOn(lib)
+  .dependsOn(testLib % Test)
   .aggregate(lib)
   .settings(commonSettings: _*)
   .settings(
@@ -35,9 +36,22 @@ lazy val samzaLib = project
     crossScalaVersions := Seq("2.10.4"),
     ivyScala := ivyScala.value map (_.copy(overrideScalaVersion = true)),
     libraryDependencies ++= Seq(
-      "com.typesafe.play" %% "play-ws" % PlayVersion,
+      "com.typesafe.play" %% "play-json" % PlayVersion,
       "org.apache.samza" % "samza-api" % SamzaVersion,
       "joda-time" % "joda-time" % "2.2"
+    )
+  )
+
+lazy val testLib = project
+  .in(file("test-lib"))
+  .dependsOn(lib)
+  .aggregate(lib)
+  .settings(commonSettings: _*)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.typesafe.play" %% "play-json" % PlayVersion,
+      "joda-time" % "joda-time" % "2.2",
+      "org.scalacheck" %% "scalacheck" % "1.12.5"
     )
   )
 
@@ -68,7 +82,19 @@ lazy val kafkaLib_0_8 = project
     )
   )
 
-// lazy val kafkaLib_0_8 = TBC
+lazy val kafkaLib_0_9 = project
+  .in(file("kafka-lib_0_9"))
+  .dependsOn(lib)
+  .dependsOn(testLib % Test)
+  .aggregate(lib)
+  .settings(commonSettings: _*)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.typesafe.play" %% "play-json" % PlayVersion,
+      "org.apache.kafka" % "kafka-clients" % KafkaVersion_0_9,
+      "joda-time" % "joda-time" % "2.9.1"
+    )
+  )
 
 
 lazy val commonSettings: Seq[Setting[_]] = Seq(

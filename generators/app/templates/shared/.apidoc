@@ -8,4 +8,8 @@ code:
         play_2_4_client: play-client/src/main/generated
         kafka_0_8: kafka-lib_0_8/src/main/generated
         kafka_0_8_tests: kafka-lib_0_8/src/test/generated
+        kafka_0_9_serde: kafka-lib_0_9/src/main/generated
+        kafka_0_9_serde_test: kafka-lib_0_9/src/test/generated
         samza_serde: samza-lib/src/main/generated
+        samza_serde_test: samza-lib/src/test/generated
+        scalacheck_arbitrary: test-lib/src/main/generated
