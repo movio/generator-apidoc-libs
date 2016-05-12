@@ -96,25 +96,6 @@ lazy val kafkaLib_0_9 = project
     )
   )
 
-
-lazy val commonSettings: Seq[Setting[_]] = Seq(
-  name <<= name("<%= props.projectName %>-" + _),
-  organization := "<%= props.organization %>",
-  unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "generated",
-  unmanagedSourceDirectories in Test += baseDirectory.value / "src" / "test" / "generated",
-  libraryDependencies ++= Seq(
-    "org.scalatest" %% "scalatest" % "2.2.5" % "test"
-  ),
-  scalacOptions += "-feature",
-  publishTo <<= version { (v: String) ⇒
-    val repo = "https://artifactory.movio.co/artifactory/"
-    if (v.trim.endsWith("SNAPSHOT"))
-      Some("movio snapshots" at repo + "libs-snapshot-local")
-    else
-      Some("movio releases" at repo + "libs-release-local")
-  }
-)
-
 // ------------------------
 // Release Settings
 // ------------------------
@@ -140,6 +121,25 @@ releaseVersion := { ver =>
     sbtrelease.Version(ver).map(_.withoutQualifier.string).getOrElse(sbtrelease.versionFormatError)
   )
 }
+
+
+lazy val commonSettings: Seq[Setting[_]] = Seq(
+  name <<= name("<%= props.projectName %>-" + _),
+  organization := "<%= props.organization %>",
+  unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "generated",
+  unmanagedSourceDirectories in Test += baseDirectory.value / "src" / "test" / "generated",
+  libraryDependencies ++= Seq(
+    "org.scalatest" %% "scalatest" % "2.2.5" % "test"
+  ),
+  scalacOptions += "-feature",
+  publishTo <<= version { (v: String) ⇒
+    val repo = "https://artifactory.movio.co/artifactory/"
+    if (v.trim.endsWith("SNAPSHOT"))
+      Some("movio snapshots" at repo + "libs-snapshot-local")
+    else
+      Some("movio releases" at repo + "libs-release-local")
+  }
+)
 
 publishTo <<= version { (v: String) ⇒
   val repo = "https://artifactory.movio.co/artifactory/"
