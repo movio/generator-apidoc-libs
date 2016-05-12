@@ -141,10 +141,6 @@ releaseVersion := { ver =>
   )
 }
 
-releaseVersionBump := sbtrelease.Version.Bump.Minor
-releaseTagName := s"${version.value}"
-releaseCrossBuild := true
-
 publishTo <<= version { (v: String) ⇒
   val repo = "https://artifactory.movio.co/artifactory/"
   if (v.trim.endsWith("SNAPSHOT"))
