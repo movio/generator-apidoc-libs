@@ -2,7 +2,7 @@ organization := "<%= props.organization %>"
 
 name := "<%= props.appName %>"
 
-crossScalaVersions in ThisBuild := Seq("2.10.6", "2.11.7")
+scalaVersion in ThisBuild := "2.11.8"
 
 val PlayVersion = "2.4.4"
 val SamzaVersion = "0.10.0"
@@ -126,6 +126,7 @@ releaseVersion := { ver =>
 lazy val commonSettings: Seq[Setting[_]] = Seq(
   name <<= name("<%= props.projectName %>-" + _),
   organization := "<%= props.organization %>",
+  scalaVersion := "2.11.8",
   unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "generated",
   unmanagedSourceDirectories in Test += baseDirectory.value / "src" / "test" / "generated",
   libraryDependencies ++= Seq(
