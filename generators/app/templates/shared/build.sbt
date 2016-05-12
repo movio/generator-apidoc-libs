@@ -115,6 +115,32 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
   }
 )
 
+// ------------------------
+// Release Settings
+// ------------------------
+// Release Process:
+// Manual:
+//   sbt
+//   > release
+//   > Release version [0.1.0] : ...
+// Automatic:
+//   sbt -Drelease_version=1.0.1 "release with-defaults"
+releaseVersionBump := sbtrelease.Version.Bump.Minor
+releaseTagName := version.value
+
+val manualReleaseVersion = settingKey[String]("We're going to manage the version")
+manualReleaseVersion := sys.props.get("release_version").getOrElse(
+  if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value
+)
+
+releaseTagName := manualReleaseVersion.value
+
+releaseVersion := { ver =>
+  sys.props.get("release_version").getOrElse(
+    sbtrelease.Version(ver).map(_.withoutQualifier.string).getOrElse(sbtrelease.versionFormatError)
+  )
+}
+
 releaseVersionBump := sbtrelease.Version.Bump.Minor
 releaseTagName := s"${version.value}"
 releaseCrossBuild := true
