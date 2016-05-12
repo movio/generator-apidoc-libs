@@ -11,7 +11,6 @@ def sbtBuild = new SbtBuild
     name: "<%= props.appName %>",
     gitRepo: "<%= props.gitCloneUrl %>",
     testReportRegex: "**/target/test-reports/*.xml",
-    requiresMysql: <%= props.testsRequireMysql %>,
   )
 
 def sbtCiJob = new SbtJob
