@@ -2,7 +2,7 @@ organization := "<%= props.organization %>"
 
 name := "<%= props.appName %>"
 
-crossScalaVersions in ThisBuild := Seq("2.10.6", "2.11.7")
+scalaVersion in ThisBuild := "2.11.8"
 
 val PlayVersion = "2.4.4"
 val SamzaVersion = "0.10.0"
@@ -96,10 +96,37 @@ lazy val kafkaLib_0_9 = project
     )
   )
 
+// ------------------------
+// Release Settings
+// ------------------------
+// Release Process:
+// Manual:
+//   sbt
+//   > release
+//   > Release version [0.1.0] : ...
+// Automatic:
+//   sbt -Drelease_version=1.0.1 "release with-defaults"
+releaseVersionBump := sbtrelease.Version.Bump.Minor
+releaseTagName := version.value
+
+val manualReleaseVersion = settingKey[String]("We're going to manage the version")
+manualReleaseVersion := sys.props.get("release_version").getOrElse(
+  if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value
+)
+
+releaseTagName := manualReleaseVersion.value
+
+releaseVersion := { ver =>
+  sys.props.get("release_version").getOrElse(
+    sbtrelease.Version(ver).map(_.withoutQualifier.string).getOrElse(sbtrelease.versionFormatError)
+  )
+}
+
 
 lazy val commonSettings: Seq[Setting[_]] = Seq(
   name <<= name("<%= props.projectName %>-" + _),
   organization := "<%= props.organization %>",
+  scalaVersion := "2.11.8",
   unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "generated",
   unmanagedSourceDirectories in Test += baseDirectory.value / "src" / "test" / "generated",
   libraryDependencies ++= Seq(
@@ -114,10 +141,6 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
       Some("movio releases" at repo + "libs-release-local")
   }
 )
-
-releaseVersionBump := sbtrelease.Version.Bump.Minor
-releaseTagName := s"${version.value}"
-releaseCrossBuild := true
 
 publishTo <<= version { (v: String) ⇒
   val repo = "https://artifactory.movio.co/artifactory/"

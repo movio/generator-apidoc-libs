@@ -34,6 +34,13 @@ module.exports = yeoman.generators.Base.extend({
         return abbrev + '-' + _.kebabCase(answers.projectName) + '-lib';
       }
     }, {
+        type: 'input',
+        name: 'gitRepoUrl',
+        message: 'Git Repo URL',
+        default: function(answers) {
+            return 'http://github.com/movio/' + answers.appName;
+        }
+    }, {
       type: 'confirm',
       name: 'useApidoc',
       message: 'Use apidoc',
@@ -75,6 +82,8 @@ module.exports = yeoman.generators.Base.extend({
 
       props.orgAbbreviation = props.organization.match(/\b(\w)/g).join('');
       props.appNameSpace = props.projectName.toLowerCase().split(' ').join('.');
+
+      props.gitCloneUrl = props.gitRepoUrl.replace(/https:\/\//g, "git@");
 
       done();
     }.bind(this));
